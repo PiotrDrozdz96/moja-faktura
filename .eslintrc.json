@@ -14,7 +14,9 @@
   },
   "globals": {
     "document": true,
+    "console": true,
     "Office": true,
+    "OfficeRuntime": true,
     "Word": true
   }
 }

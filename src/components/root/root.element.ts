@@ -1,13 +1,16 @@
 import { Component, State } from 'component-decorators';
 import 'component-decorators/directivities/web-switch';
 
+import storage from '../../utils/storage';
 import '../loader';
+import '../your-data';
 
 import template from './root.element.html';
 import './root.element.scss';
 
 const rootStates = {
   OUTSIDE: 'outside',
+  YOUR_DATA: 'yourData',
   INITIAL: 'initial',
 } as const;
 
@@ -21,11 +24,16 @@ class RootElement extends HTMLElement {
   @State('web-switch.state') state: RootState = rootStates.OUTSIDE;
 
   connectedCallback() {
-    Office.onReady((info) => {
-      this.loaderVisible = false;
+    Office.onReady(async (info) => {
       if (info.host === Office.HostType.Word) {
-        this.state = this.states.INITIAL;
+        const yourData = await storage.getItem('yourData');
+        if (!yourData) {
+          this.state = this.states.YOUR_DATA;
+        } else {
+          this.state = this.states.INITIAL;
+        }
       }
+      this.loaderVisible = false;
     });
   }
 

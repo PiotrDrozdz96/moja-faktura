@@ -1,7 +1,10 @@
 <app-loader visible></app-loader>
 <web-switch>
   <template slot="{{states.OUTSIDE}}">
-    <h2 class="ms-font-xl">Please sideload your add-in to see app body.</h2>
+    <h2 class="ms-font-xl">Otwórz dodatek w aplikacji Microsoft Word, aby zobaczyć treść.</h2>
+  </template>
+  <template slot="{{states.YOUR_DATA}}">
+    <app-your-data></app-your-data>
   </template>
   <template slot="{{states.INITIAL}}">
     <h2 class="ms-font-xl"> Discover what Office Add-ins can do for you today! </h2>
