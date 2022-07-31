@@ -1,0 +1,16 @@
+$errorColor: #EE5050;
+
+app-input {
+  &[error] > div {
+    border-color: $errorColor !important;
+  }
+
+  &:not([error]) > div:focus-within {
+    border-color: #0078D7 !important;
+  }
+
+  .error-message {
+    margin-left: 12px;
+    color: $errorColor;
+  }
+}

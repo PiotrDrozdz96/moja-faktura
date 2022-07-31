@@ -28,7 +28,9 @@
   "dependencies": {
     "component-decorators": "^1.0.5",
     "core-js": "^3.9.1",
-    "regenerator-runtime": "^0.13.7"
+    "lodash": "^4.17.21",
+    "regenerator-runtime": "^0.13.7",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",

@@ -1,6 +1,5 @@
 type YourData = {
-  first_name: string;
-  last_name: string;
+  company_name: string;
   locality: string;
   house_number: string;
   postal_code: string;

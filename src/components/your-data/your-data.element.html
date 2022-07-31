@@ -1,8 +1,10 @@
 <h2 class="ms-font-xl">Uzupełnij swoje dane.</h2>
-<app-input label="Imię"></app-input>
-<app-input label="Nazwisko"></app-input>
-<app-input label="Miejscowość"></app-input>
-<app-input label="Numer domu"></app-input>
-<app-input label="Kod pocztowy"></app-input>
-<app-input label="Miasto"></app-input>
-<app-input label="NIP"></app-input>
+<app-form>
+  <app-input name="company_name" label="Nazwa firmy"></app-input>
+  <app-input name="locality" label="Miejscowość"></app-input>
+  <app-input name="house_number" label="Numer domu"></app-input>
+  <app-input name="postal_code" label="Kod pocztowy"></app-input>
+  <app-input name="city" label="Miasto"></app-input>
+  <app-input name="nip" label="NIP"></app-input>
+  <app-button type="submit">Zapisz</app-button>
+</app-form>
