@@ -1,0 +1,20 @@
+{
+  "extends": ["plugin:office-addins/recommended"],
+  "plugins": ["office-addins"],
+  "rules": {
+    "quotes": [2, "single", "avoid-escape"],
+    "prettier/prettier": ["error", { "singleQuote": true, "endOfLine": "auto" }],
+    "no-underscore-dangle": [2, { "allowAfterThis": true }],
+    "lines-between-class-members": 0,
+    "class-methods-use-this": 0,
+    "import/prefer-default-export": 0,
+    "no-unused-vars": 0,
+    "default-case": 0,
+    "object-curly-newline": 0
+  },
+  "globals": {
+    "document": true,
+    "Office": true,
+    "Word": true
+  }
+}
