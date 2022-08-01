@@ -46,7 +46,13 @@ class YourDataElement extends HTMLElement {
   public onSubmit = async (values: YourData) => {
     this.$root.loaderVisible = true;
     await storage.setItem('yourData', values);
-    this.$root.state = this.$root.states.INITIAL;
+    const companyData = await storage.getItem('companyData');
+
+    if (companyData) {
+      this.$root.state = this.$root.states.INITIAL;
+    } else {
+      this.$root.state = this.$root.states.COMPANY_DATA;
+    }
   };
 }
 

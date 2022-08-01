@@ -4,6 +4,7 @@ import 'component-decorators/directivities/web-switch';
 import storage from '../../utils/storage';
 import '../loader';
 import '../your-data';
+import '../company-data';
 
 import template from './root.element.html';
 import './root.element.scss';
@@ -11,6 +12,7 @@ import './root.element.scss';
 const rootStates = {
   OUTSIDE: 'outside',
   YOUR_DATA: 'yourData',
+  COMPANY_DATA: 'companyData',
   INITIAL: 'initial',
 } as const;
 
@@ -28,8 +30,11 @@ class RootElement extends HTMLElement {
     Office.onReady(async (info) => {
       if (info.host === Office.HostType.Word) {
         const yourData = await storage.getItem('yourData');
+        const companyData = await storage.getItem('companyData');
         if (!yourData) {
           this.state = this.states.YOUR_DATA;
+        } else if (!companyData) {
+          this.state = this.states.COMPANY_DATA;
         } else {
           this.state = this.states.INITIAL;
         }
