@@ -5,6 +5,7 @@ import storage from '../../utils/storage';
 import '../loader';
 import '../your-data';
 import '../company-data';
+import '../main';
 
 import template from './root.element.html';
 import './root.element.scss';
@@ -13,10 +14,10 @@ const rootStates = {
   OUTSIDE: 'outside',
   YOUR_DATA: 'yourData',
   COMPANY_DATA: 'companyData',
-  INITIAL: 'initial',
+  MAIN: 'main',
 } as const;
 
-type RootState = typeof rootStates[keyof typeof rootStates];
+export type RootState = typeof rootStates[keyof typeof rootStates];
 
 @Component({ selector: 'app-root', template })
 class RootElement extends HTMLElement {
@@ -36,23 +37,11 @@ class RootElement extends HTMLElement {
         } else if (!companyData) {
           this.state = this.states.COMPANY_DATA;
         } else {
-          this.state = this.states.INITIAL;
+          this.state = this.states.MAIN;
         }
       }
     });
   }
-
-  // @On('button', 'click')
-  // async run() {
-  //   return Word.run(async (context) => {
-  //     const invoiceRange = context.document.body.insertOoxml(template, Word.InsertLocation.replace);
-  //     context.load(invoiceRange.paragraphs, 'spaceAfter');
-  //     await context.sync();
-  //     invoiceRange.paragraphs.items.forEach((paragraph) => (paragraph.spaceAfter = 0));
-
-  //     await context.sync();
-  //   });
-  // }
 }
 
 export default RootElement;

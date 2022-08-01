@@ -3,31 +3,51 @@ import whenDefined from 'component-decorators/helpers/whenDefined';
 
 import YourData from '../../types/yourData';
 import FormElement from '../form';
-import RootElement from '../root/root.element';
+import RootElement from '../root';
+import ButtonElement from '../button';
+import '../button';
 import '../form';
 import '../input';
-import '../button';
 import storage from '../../utils/storage';
 
 import { validationSchema, initialValues } from './your-data.utils';
 import template from './your-data.element.html';
+import './your-data.element.scss';
 
 @Component({ selector: 'app-your-data', template })
 class YourDataElement extends HTMLElement {
-  @Ref('app-form') $form: FormElement;
   @Context('app-root') $root: RootElement;
+  @Ref('app-form') $form: FormElement;
+  @Ref('[cancelButton]') $cancelButton: ButtonElement;
 
   @Prop('input[name="bank_number"]', 'value') bankNumber: string;
 
-  connectedCallback() {
+  async connectedCallback() {
+    const yourData = await storage.getItem('yourData');
+    if (yourData) {
+      this.$cancelButton.setAttribute('style', '');
+    }
+
     whenDefined('app-form', () => {
       this.$form.init({
         validationSchema,
-        initialValues,
+        initialValues: yourData || initialValues,
         onSubmit: this.onSubmit,
       });
     });
   }
+
+  public onSubmit = async (values: YourData) => {
+    this.$root.loaderVisible = true;
+    await storage.setItem('yourData', values);
+    const companyData = await storage.getItem('companyData');
+
+    if (companyData) {
+      this.$root.state = this.$root.states.MAIN;
+    } else {
+      this.$root.state = this.$root.states.COMPANY_DATA;
+    }
+  };
 
   @On('input[name="bank_number"]', 'oninput')
   public onBankNumberChange(e: Event) {
@@ -43,17 +63,10 @@ class YourDataElement extends HTMLElement {
       .trim();
   }
 
-  public onSubmit = async (values: YourData) => {
-    this.$root.loaderVisible = true;
-    await storage.setItem('yourData', values);
-    const companyData = await storage.getItem('companyData');
-
-    if (companyData) {
-      this.$root.state = this.$root.states.INITIAL;
-    } else {
-      this.$root.state = this.$root.states.COMPANY_DATA;
-    }
-  };
+  @On('[cancelButton]', 'onclick')
+  public onCancel() {
+    this.$root.state = this.$root.states.MAIN;
+  }
 }
 
 export default YourDataElement;

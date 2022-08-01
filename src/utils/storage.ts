@@ -8,7 +8,7 @@ type StorageDataMap = {
   companyData: CompanyData;
 };
 
-type StorageKey = keyof StorageDataMap;
+export type StorageKey = keyof StorageDataMap;
 
 const jsonDataKeys: StorageKey[] = ['yourData', 'companyData'];
 
