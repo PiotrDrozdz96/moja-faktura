@@ -21,9 +21,10 @@ class RootElement extends HTMLElement {
   readonly states = rootStates;
 
   @State('app-loader.visible') loaderVisible: boolean;
-  @State('web-switch.state') state: RootState = rootStates.OUTSIDE;
+  @State('web-switch.state', { 'app-loader.visible': () => false }) state: RootState = rootStates.OUTSIDE;
 
   connectedCallback() {
+    this.loaderVisible = true;
     Office.onReady(async (info) => {
       if (info.host === Office.HostType.Word) {
         const yourData = await storage.getItem('yourData');
@@ -33,7 +34,6 @@ class RootElement extends HTMLElement {
           this.state = this.states.INITIAL;
         }
       }
-      this.loaderVisible = false;
     });
   }
 

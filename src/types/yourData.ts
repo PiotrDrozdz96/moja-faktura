@@ -1,10 +1,7 @@
-type YourData = {
-  company_name: string;
-  locality: string;
-  house_number: string;
-  postal_code: string;
-  city: string;
-  nip: string;
+import CompanyData from './companyData';
+
+type YourData = CompanyData & {
+  bank_number: string;
 };
 
 export default YourData;
