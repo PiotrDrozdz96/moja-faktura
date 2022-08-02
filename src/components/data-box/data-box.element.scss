@@ -1,4 +1,10 @@
 app-data-box {
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
   .box {
     display: flex;
     flex-direction: column;
@@ -10,8 +16,6 @@ app-data-box {
 
   .button {
     color: #0078D7;
-    text-align: right;
-    margin-bottom: 4px;
     cursor: pointer;
   }
 }

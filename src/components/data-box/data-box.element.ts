@@ -13,6 +13,7 @@ import './data-box.element.scss';
 class MainElement extends HTMLElement {
   @Attr('root-state') rootState: RootState;
   @Attr('data', 'json') data: CompanyData | YourData;
+  @Attr('label') label: string;
 
   @Context('app-root') $root: RootElement;
   @Ref('.box') $box: HTMLDivElement;
