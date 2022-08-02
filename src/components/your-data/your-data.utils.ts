@@ -4,7 +4,7 @@ import YourData from '../../types/yourData';
 
 export const validationSchema = validationBuilder({
   company_name: [string, required],
-  locality: [string, required],
+  street: [string, required],
   house_number: [string, required],
   postal_code: [string, postalCode, required],
   city: [string, required],
@@ -14,7 +14,7 @@ export const validationSchema = validationBuilder({
 
 export const initialValues: YourData = {
   company_name: '',
-  locality: '',
+  street: '',
   house_number: '',
   postal_code: '',
   city: '',

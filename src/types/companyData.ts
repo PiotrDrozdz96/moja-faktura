@@ -1,6 +1,6 @@
 type CompanyData = {
   company_name: string;
-  locality: string;
+  street: string;
   house_number: string;
   postal_code: string;
   city: string;
