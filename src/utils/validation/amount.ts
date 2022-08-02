@@ -7,7 +7,6 @@ addMethod(string, 'amount', function amountValidator() {
     let formattedValue = value.replace(/\s/g, '');
     formattedValue = formattedValue.replace(/,/g, '.');
 
-    console.log({ formattedValue, isNaN: isNaN(Number(formattedValue)) });
     return !value || !isNaN(Number(formattedValue)) || AMOUNT_FORMAT.test(formattedValue);
   });
 });

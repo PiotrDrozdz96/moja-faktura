@@ -1,5 +1,6 @@
 import { Component, Prop, Context, Ref, On } from 'component-decorators';
 import whenDefined from 'component-decorators/helpers/whenDefined';
+import createHtmlTemplate from 'component-decorators/helpers/createHtmlTemplate';
 import _omit from 'lodash/omit';
 
 import CompanyData from '../../types/companyData';
@@ -10,6 +11,7 @@ import RootElement from '../root';
 import FormElement from '../form';
 import '../data-box';
 
+import invoice from './invoice.xml';
 import { validationSchema } from './main.utils';
 import template from './main.element.html';
 import './main.element.scss';
@@ -43,13 +45,39 @@ class MainElement extends HTMLElement {
           issuer: mainData?.issuer || '',
           amount: mainData?.amount || '',
         },
-        onSubmit: this.onSubmit,
+        onSubmit: (values: MainData) => this.onSubmit(values),
       });
     });
   }
 
   public async onSubmit(values: MainData) {
     await storage.setItem('mainData', _omit(values, ['date']));
+    const invoiceTemplate = createHtmlTemplate(invoice);
+
+    const [year, month, day] = values.date.split('-');
+    const deadlineDate = new Date(values.date);
+    deadlineDate.setMonth(deadlineDate.getMonth() + 1);
+    const [deadlineDateWithoutTime] = deadlineDate.toISOString().split('T');
+    const [deadlineYear, deadlineMonth] = deadlineDateWithoutTime.split('-');
+
+    const invoiceData = {
+      yourData: this.yourData,
+      companyData: this.companyData,
+      invoice_number: [month, year].join('/'),
+      amount: values.amount,
+      issuer: values.issuer,
+      date: [day, month, year].join('.'),
+      payment_deadline: [14, deadlineMonth, deadlineYear].join('.'),
+    };
+
+    Word.run(async (context) => {
+      const invoiceRange = context.document.body.insertOoxml(invoiceTemplate(invoiceData), Word.InsertLocation.replace);
+      context.load(invoiceRange.paragraphs, 'spaceAfter');
+      await context.sync();
+      invoiceRange.paragraphs.items.forEach((paragraph) => (paragraph.spaceAfter = 0));
+
+      await context.sync();
+    });
   }
 
   @On('input[name="amount"]', 'onchange')
@@ -64,18 +92,6 @@ class MainElement extends HTMLElement {
       mainValue.length - 3
     )},${formattedSecondValue}`;
   }
-
-  // @On('button', 'click')
-  // async run() {
-  //   return Word.run(async (context) => {
-  //     const invoiceRange = context.document.body.insertOoxml(template, Word.InsertLocation.replace);
-  //     context.load(invoiceRange.paragraphs, 'spaceAfter');
-  //     await context.sync();
-  //     invoiceRange.paragraphs.items.forEach((paragraph) => (paragraph.spaceAfter = 0));
-
-  //     await context.sync();
-  //   });
-  // }
 }
 
 export default MainElement;
