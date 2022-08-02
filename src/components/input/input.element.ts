@@ -10,6 +10,7 @@ type ValidateFunction = (this: HTMLInputElement, ev: FocusEvent) => void;
 class InputElement extends HTMLElement {
   @Attr('name') name: string;
   @Attr('label') label: string;
+  @Attr('type') type: 'text' | 'date';
   @Prop('input', 'value') value: string;
 
   @Ref('input') $input: HTMLInputElement;

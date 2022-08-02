@@ -6,3 +6,10 @@
   companyData
   root-state="{{rootStates.COMPANY_DATA}}"
 ></app-data-box>
+
+<app-form>
+  <app-input label="Data" name="date" type="date"></app-input>
+  <app-input label="Wystawiający" name="issuer"></app-input>
+  <app-input label="Kwota" name="amount"></app-input>
+  <app-button type="submit" color="primary">Generuj fakturę</app-button>
+</app-form>

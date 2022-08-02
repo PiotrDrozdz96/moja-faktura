@@ -1,3 +1,4 @@
+import MainData from '../types/mainData';
 import CompanyData from '../types/companyData';
 import YourData from '../types/yourData';
 
@@ -6,11 +7,12 @@ const storagePrefix = 'invoice-';
 type StorageDataMap = {
   yourData: YourData;
   companyData: CompanyData;
+  mainData: Omit<MainData, 'date'>;
 };
 
 export type StorageKey = keyof StorageDataMap;
 
-const jsonDataKeys: StorageKey[] = ['yourData', 'companyData'];
+const jsonDataKeys: StorageKey[] = ['yourData', 'companyData', 'mainData'];
 
 class Storage {
   async getItem<K extends StorageKey>(key: K): Promise<StorageDataMap[K] | null> {
