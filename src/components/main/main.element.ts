@@ -57,7 +57,6 @@ class MainElement extends HTMLElement {
     const [year, month, day] = values.date.split('-');
     const deadlineDate = new Date(values.date);
     deadlineDate.setDate(15);
-    deadlineDate.setMonth(deadlineDate.getMonth() + 1);
     const [deadlineDateWithoutTime] = deadlineDate.toISOString().split('T');
     const [deadlineYear, deadlineMonth] = deadlineDateWithoutTime.split('-');
 
